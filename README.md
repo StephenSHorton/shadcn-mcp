@@ -58,14 +58,7 @@ bun install
 bun run build
 ```
 
-4. Configure Claude Desktop:
-
-Edit the configuration file for your platform:
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-- **Linux:** `~/.config/Claude/claude_desktop_config.json`
-
-Add the server configuration:
+4. Configure Claude Desktop by adding the server configuration to your `claude_desktop_config.json` file:
 ```json
 {
   "mcpServers": {
