@@ -3,6 +3,7 @@ import { server } from "@/lib/config";
 import { registerAccordionResources } from "@/resources/accordion";
 import { registerAccordionPrompts } from "@/prompts/accordion";
 import { registerAccordionTools } from "@/tools/accordion";
+import { registerListComponentsTool } from "@/tools/list-components";
 
 async function main() {
 	// Register Accordion resources, prompts, and tools
@@ -14,6 +15,9 @@ async function main() {
 
 	console.error("Registering Accordion tools...");
 	registerAccordionTools(server);
+
+	console.error("Registering list components tool...");
+	registerListComponentsTool(server);
 
 	const transport = new StdioServerTransport();
 	await server.connect(transport);

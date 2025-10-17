@@ -3,6 +3,7 @@ import type {
 	ComponentExample,
 	ComponentInstallation,
 	ComponentSource,
+	ShadcnComponent,
 } from "@/types";
 
 const SHADCN_DOCS_BASE = "https://ui.shadcn.com";
@@ -140,4 +141,129 @@ export async function fetchComponentInstallation(
 			"Import and use the component in your code",
 		],
 	};
+}
+
+/**
+ * Fetches the list of all available Shadcn components
+ */
+export async function fetchAllComponents(): Promise<ShadcnComponent[]> {
+	try {
+		const url = `${SHADCN_DOCS_BASE}/docs/components`;
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			console.error(`Failed to fetch components list: ${response.status}`);
+			return getDefaultComponentsList();
+		}
+
+		const html = await response.text();
+
+		// Extract component links from the page
+		// Pattern: /docs/components/[slug]
+		const componentRegex = /href="\/docs\/components\/([^"]+)"/g;
+		const components = new Set<string>();
+		let match: RegExpExecArray | null;
+
+		while ((match = componentRegex.exec(html)) !== null) {
+			const slug = match[1] ?? "";
+			// Filter out non-component pages
+			if (
+				slug &&
+				!slug.includes("#") &&
+				slug !== "index" &&
+				slug !== "installation"
+			) {
+				components.add(slug);
+			}
+		}
+
+		return Array.from(components)
+			.sort()
+			.map((slug) => ({
+				name: slug
+					.split("-")
+					.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(" "),
+				slug,
+				url: `${SHADCN_DOCS_BASE}/docs/components/${slug}`,
+			}));
+	} catch (error) {
+		console.error("Error fetching components list:", error);
+		return getDefaultComponentsList();
+	}
+}
+
+/**
+ * Returns a hardcoded list of components as fallback
+ */
+function getDefaultComponentsList(): ShadcnComponent[] {
+	const components = [
+		"accordion",
+		"alert",
+		"alert-dialog",
+		"aspect-ratio",
+		"avatar",
+		"badge",
+		"breadcrumb",
+		"button",
+		"button-group",
+		"calendar",
+		"card",
+		"carousel",
+		"chart",
+		"checkbox",
+		"collapsible",
+		"combobox",
+		"command",
+		"context-menu",
+		"data-table",
+		"date-picker",
+		"dialog",
+		"drawer",
+		"dropdown-menu",
+		"empty",
+		"field",
+		"form",
+		"hover-card",
+		"input",
+		"input-group",
+		"input-otp",
+		"item",
+		"kbd",
+		"label",
+		"menubar",
+		"navigation-menu",
+		"pagination",
+		"popover",
+		"progress",
+		"radio-group",
+		"resizable",
+		"scroll-area",
+		"select",
+		"separator",
+		"sheet",
+		"sidebar",
+		"skeleton",
+		"slider",
+		"sonner",
+		"spinner",
+		"switch",
+		"table",
+		"tabs",
+		"textarea",
+		"toast",
+		"toggle",
+		"toggle-group",
+		"tooltip",
+		"typography",
+	];
+
+	return components.map((slug) => ({
+		name: slug
+			.split("-")
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(" "),
+		slug,
+		url: `${SHADCN_DOCS_BASE}/docs/components/${slug}`,
+	}));
 }
