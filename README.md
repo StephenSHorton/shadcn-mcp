@@ -60,26 +60,32 @@ bun run build
 
 4. Configure Claude Desktop:
 
-**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+Edit the configuration file for your platform:
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
 
 Add the server configuration:
 ```json
 {
   "mcpServers": {
     "shadcn-mcp": {
-      "command": "/home/stephen/.bun/bin/bun",
+      "command": "/absolute/path/to/bun",
       "args": [
-        "/home/stephen/development/shadcn-mcp/build/index.js"
+        "/absolute/path/to/shadcn-mcp/build/index.js"
       ]
     }
   }
 }
 ```
 
-**Important:** Use absolute paths for both `command` and `args`.
+**Important:** Replace paths with your actual absolute paths:
+- **Find Bun:** Run `which bun` (macOS/Linux) or `where bun` (Windows)
+- **Find Project:** Use the full path to where you cloned this repository
+- Example macOS/Linux: `"/Users/yourname/.bun/bin/bun"` and `"/Users/yourname/projects/shadcn-mcp/build/index.js"`
+- Example Windows: `"C:\\Users\\yourname\\.bun\\bin\\bun.exe"` and `"C:\\Users\\yourname\\projects\\shadcn-mcp\\build\\index.js"`
 
-5. Restart Claude Desktop completely (quit from menu, don't just close window)
+5. Restart Claude Desktop completely (fully quit the application, don't just close the window)
 
 ## Usage
 
