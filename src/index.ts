@@ -1,14 +1,23 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { server } from "@/lib/config";
-import { registerAllTools } from "@/tools";
+import { registerAccordionResources } from "@/resources/accordion";
+import { registerAccordionPrompts } from "@/prompts/accordion";
+import { registerAccordionTools } from "@/tools/accordion";
 
 async function main() {
-	// Register all tools before connecting
-	registerAllTools(server);
+	// Register Accordion resources, prompts, and tools
+	console.error("Registering Accordion resources...");
+	registerAccordionResources(server);
+
+	console.error("Registering Accordion prompts...");
+	registerAccordionPrompts(server);
+
+	console.error("Registering Accordion tools...");
+	registerAccordionTools(server);
 
 	const transport = new StdioServerTransport();
 	await server.connect(transport);
-	console.error("Weather MCP Server running on stdio");
+	console.error("Shadcn MCP Server running on stdio");
 }
 
 main().catch((error) => {

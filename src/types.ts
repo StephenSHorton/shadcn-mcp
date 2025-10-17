@@ -1,34 +1,29 @@
-export interface AlertFeature {
-	properties: {
-		event?: string;
-		areaDesc?: string;
-		severity?: string;
-		status?: string;
-		headline?: string;
-	};
+export interface ComponentDocumentation {
+	name: string;
+	description: string;
+	content: string;
 }
 
-export interface ForecastPeriod {
-	name?: string;
-	temperature?: number;
-	temperatureUnit?: string;
-	windSpeed?: string;
-	windDirection?: string;
-	shortForecast?: string;
+export interface ComponentExample {
+	title?: string;
+	code: string;
+	description?: string;
 }
 
-export interface AlertsResponse {
-	features: AlertFeature[];
+export interface ComponentInstallation {
+	cliCommand: string;
+	dependencies: string[];
+	manualSteps?: string[];
 }
 
-export interface PointsResponse {
-	properties: {
-		forecast?: string;
-	};
+export interface ComponentSource {
+	fileName: string;
+	code: string;
+	imports?: string[];
 }
 
-export interface ForecastResponse {
-	properties: {
-		periods: ForecastPeriod[];
-	};
+export interface ShadcnComponent {
+	name: string;
+	slug: string;
+	url: string;
 }
